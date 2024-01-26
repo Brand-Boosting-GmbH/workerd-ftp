@@ -11,6 +11,10 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      SERVER: ${{ secrets.SERVER }}
+      USER: ${{ secrets.USER }}
+      PASS: ${{ secrets.PASS }}
     steps:
       - uses: actions/checkout@v4
       - run: corepack enable
