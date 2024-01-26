@@ -8,18 +8,18 @@ export default class Lock {
     if (this.inUse) {
       return new Promise<void>((resolve) => {
         this.queue.push(() => {
-          this.inUse = true
-          resolve()
-        })
-      })
+          this.inUse = true;
+          resolve();
+        });
+      });
     } else {
-      this.inUse = true
-      return new Promise<void>((resolve) => resolve())
+      this.inUse = true;
+      return new Promise<void>((resolve) => resolve());
     }
   }
 
   public unlock() {
-    this.inUse = false
-    this.queue.shift()?.call(this)
+    this.inUse = false;
+    this.queue.shift()?.call(this);
   }
 }

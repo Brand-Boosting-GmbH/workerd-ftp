@@ -1,3 +1,1 @@
-export {
-  FTPClient
-} from './classes/ftp-client'
+export { FTPClient } from "./classes/ftp-client";

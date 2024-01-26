@@ -1,43 +1,43 @@
 enum Commands {
-  User = 'USER',
-  Password = 'PASS',
-  CdUp = 'CDUP',
-  CWD = 'CWD',
-  Quit = 'QUIT',
-  Port = 'PORT',
-  ExtendedPort = 'EPRT',
-  PassiveConn = 'PASV',
-  ExtendedPassive = 'EPSV',
-  Type = 'TYPE',
+  User = "USER",
+  Password = "PASS",
+  CdUp = "CDUP",
+  CWD = "CWD",
+  Quit = "QUIT",
+  Port = "PORT",
+  ExtendedPort = "EPRT",
+  PassiveConn = "PASV",
+  ExtendedPassive = "EPSV",
+  Type = "TYPE",
 
-  Retrieve = 'RETR',
-  Store = 'STOR',
-  Allocate = 'ALLO',
+  Retrieve = "RETR",
+  Store = "STOR",
+  Allocate = "ALLO",
 
-  RenameFrom = 'RNFR',
-  RenameTo = 'RNTO',
-  Delete = 'DELE',
-  RMDIR = 'RMD',
-  MKDIR = 'MKD',
-  PWD = 'PWD',
-  List = 'LIST',
-  PlainList = 'NLST',
-  ExList = 'MLSD',
-  ExData = 'MLST',
+  RenameFrom = "RNFR",
+  RenameTo = "RNTO",
+  Delete = "DELE",
+  RMDIR = "RMD",
+  MKDIR = "MKD",
+  PWD = "PWD",
+  List = "LIST",
+  PlainList = "NLST",
+  ExList = "MLSD",
+  ExData = "MLST",
 
-  Auth = 'AUTH',
-  Protection = 'PROT',
+  Auth = "AUTH",
+  Protection = "PROT",
 
-  Size = 'SIZE',
-  ModifiedTime = 'MDTM',
+  Size = "SIZE",
+  ModifiedTime = "MDTM",
 
-  Features = 'FEAT',
+  Features = "FEAT",
 }
 
 enum Types {
-  ASCII = 'A',
-  EBCDIC = 'E',
-  Binary = 'I',
+  ASCII = "A",
+  EBCDIC = "E",
+  Binary = "I",
 }
 
 enum StatusCodes {
@@ -93,4 +93,4 @@ enum StatusCodes {
   FileNameNotAllowed,
 }
 
-export { Commands, StatusCodes, Types }
+export { Commands, StatusCodes, Types };
