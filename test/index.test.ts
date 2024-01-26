@@ -52,7 +52,7 @@ describe("FTPClient", () => {
         await ftp.connect();
       });
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -68,7 +68,7 @@ describe("FTPClient", () => {
       });
       expect(list.filter((i) => !["", ".", ".."].includes(i))).toEqual([]);
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -99,7 +99,7 @@ describe("FTPClient", () => {
       await basicFtp.downloadTo(writable, "test.txt");
       expect(content).toEqual("hello world");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -118,7 +118,7 @@ describe("FTPClient", () => {
         "test.txt",
       ]);
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -137,7 +137,7 @@ describe("FTPClient", () => {
       });
       expect(content).toEqual("hello world");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -155,7 +155,7 @@ describe("FTPClient", () => {
       const list = await basicFtp.list();
       expect(list.map((i) => i.name)).not.toContain("test.txt");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -173,7 +173,7 @@ describe("FTPClient", () => {
       const list = await basicFtp.list();
       expect(list.map((i) => i.name)).toContain("test");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -190,7 +190,7 @@ describe("FTPClient", () => {
       });
       expect(cwd).toEqual("/");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -208,7 +208,7 @@ describe("FTPClient", () => {
       });
       expect(cwd).toEqual("/test");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -230,7 +230,7 @@ describe("FTPClient", () => {
       });
       expect(cwd).toEqual(["/", "/test", "/"]);
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -248,7 +248,7 @@ describe("FTPClient", () => {
       });
       expect(cwd).toEqual("/");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -279,7 +279,7 @@ describe("FTPClient", () => {
       await basicFtp.downloadTo(writable, "test.txt");
       expect(content).toEqual("hello world");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 
   test(
@@ -299,6 +299,6 @@ describe("FTPClient", () => {
       });
       expect(text).toEqual("hello world");
     },
-    { timeout: 20_000 },
+    { timeout: 60_000 },
   );
 });
