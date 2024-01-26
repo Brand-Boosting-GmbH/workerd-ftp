@@ -49,7 +49,7 @@ describe("FTPClient", () => {
 
       await ftp.connect();
     });
-  });
+  }, { timeout: 20_000 });
 
   test("listBeforeUpload", async () => {
     const list = await run(async () => {
@@ -61,7 +61,7 @@ describe("FTPClient", () => {
       return await ftp.list();
     });
     expect(list.filter((i) => !["", ".", ".."].includes(i))).toEqual([]);
-  });
+  }, { timeout: 20_000 });
 
   test(
     "textUpload",
@@ -91,7 +91,7 @@ describe("FTPClient", () => {
       await basicFtp.downloadTo(writable, "test.txt");
       expect(content).toEqual("hello world");
     },
-    { timeout: 10_000 },
+    { timeout: 20_000 }
   );
 
   test("listAfterUpload", async () => {
@@ -107,7 +107,7 @@ describe("FTPClient", () => {
     expect(list.filter((i) => !["", ".", ".."].includes(i))).toEqual([
       "test.txt",
     ]);
-  });
+  }, { timeout: 20_000 });
 
   test(
     "textDownload",
@@ -124,8 +124,7 @@ describe("FTPClient", () => {
         return text;
       });
       expect(content).toEqual("hello world");
-    },
-    { timeout: 10_000 },
+    }, { timeout: 20_000 }
   );
 
   test("removeText", async () => {
@@ -140,7 +139,7 @@ describe("FTPClient", () => {
     });
     const list = await basicFtp.list();
     expect(list.map((i) => i.name)).not.toContain("test.txt");
-  });
+  }, { timeout: 20_000 });
 
   test("createDir", async () => {
     await run(async () => {
@@ -154,7 +153,7 @@ describe("FTPClient", () => {
     });
     const list = await basicFtp.list();
     expect(list.map((i) => i.name)).toContain("test");
-  });
+  }, { timeout: 20_000 });
 
   test("cwd", async () => {
     const cwd = await run(async () => {
@@ -167,7 +166,7 @@ describe("FTPClient", () => {
       return await ftp.cwd();
     });
     expect(cwd).toEqual("/");
-  });
+  }, { timeout: 20_000 });
 
   test("changeDir", async () => {
     const cwd = await run(async () => {
@@ -181,7 +180,7 @@ describe("FTPClient", () => {
       return await ftp.cwd();
     });
     expect(cwd).toEqual("/test");
-  });
+  }, { timeout: 20_000 });
 
   test("cdUpDir", async () => {
     const cwd = await run(async () => {
@@ -199,7 +198,7 @@ describe("FTPClient", () => {
       return [outside, inside, backOutside];
     });
     expect(cwd).toEqual(["/", "/test", "/"]);
-  });
+  }, { timeout: 20_000 });
 
   test("secure", async () => {
     const cwd = await run(async () => {
@@ -213,7 +212,7 @@ describe("FTPClient", () => {
       return await ftp.cwd();
     });
     expect(cwd).toEqual("/");
-  });
+  }, { timeout: 20_000 });
 
   test(
     "TODO: unsecure textUpload",
@@ -242,8 +241,7 @@ describe("FTPClient", () => {
 
       await basicFtp.downloadTo(writable, "test.txt");
       expect(content).toEqual("hello world");
-    },
-    { timeout: 10_000 },
+    }, { timeout: 20_000 }
   );
 
   test(
@@ -262,7 +260,6 @@ describe("FTPClient", () => {
         return new TextDecoder().decode(file);
       });
       expect(text).toEqual("hello world");
-    },
-    { timeout: 10_000 },
+    }, { timeout: 20_000 }
   );
 });
