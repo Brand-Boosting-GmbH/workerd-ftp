@@ -39,29 +39,37 @@ beforeAll(async () => {
 const run = createRunWorkerScript(process.env as Record<string, string>);
 
 describe("FTPClient", () => {
-  test("connect", async () => {
-    await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
-      });
+  test(
+    "connect",
+    async () => {
+      await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+        });
 
-      await ftp.connect();
-    });
-  }, { timeout: 20_000 });
-
-  test("listBeforeUpload", async () => {
-    const list = await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        user: "$USER$",
-        pass: "$PASS$",
+        await ftp.connect();
       });
-      await ftp.connect();
-      return await ftp.list();
-    });
-    expect(list.filter((i) => !["", ".", ".."].includes(i))).toEqual([]);
-  }, { timeout: 20_000 });
+    },
+    { timeout: 20_000 },
+  );
+
+  test(
+    "listBeforeUpload",
+    async () => {
+      const list = await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          user: "$USER$",
+          pass: "$PASS$",
+        });
+        await ftp.connect();
+        return await ftp.list();
+      });
+      expect(list.filter((i) => !["", ".", ".."].includes(i))).toEqual([]);
+    },
+    { timeout: 20_000 },
+  );
 
   test(
     "textUpload",
@@ -91,23 +99,27 @@ describe("FTPClient", () => {
       await basicFtp.downloadTo(writable, "test.txt");
       expect(content).toEqual("hello world");
     },
-    { timeout: 20_000 }
+    { timeout: 20_000 },
   );
 
-  test("listAfterUpload", async () => {
-    const list = await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
+  test(
+    "listAfterUpload",
+    async () => {
+      const list = await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+        });
+        await ftp.connect();
+        return await ftp.list();
       });
-      await ftp.connect();
-      return await ftp.list();
-    });
-    expect(list.filter((i) => !["", ".", ".."].includes(i))).toEqual([
-      "test.txt",
-    ]);
-  }, { timeout: 20_000 });
+      expect(list.filter((i) => !["", ".", ".."].includes(i))).toEqual([
+        "test.txt",
+      ]);
+    },
+    { timeout: 20_000 },
+  );
 
   test(
     "textDownload",
@@ -124,95 +136,120 @@ describe("FTPClient", () => {
         return text;
       });
       expect(content).toEqual("hello world");
-    }, { timeout: 20_000 }
+    },
+    { timeout: 20_000 },
   );
 
-  test("removeText", async () => {
-    await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
+  test(
+    "removeText",
+    async () => {
+      await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+        });
+        await ftp.connect();
+        await ftp.rm("test.txt");
       });
-      await ftp.connect();
-      await ftp.rm("test.txt");
-    });
-    const list = await basicFtp.list();
-    expect(list.map((i) => i.name)).not.toContain("test.txt");
-  }, { timeout: 20_000 });
+      const list = await basicFtp.list();
+      expect(list.map((i) => i.name)).not.toContain("test.txt");
+    },
+    { timeout: 20_000 },
+  );
 
-  test("createDir", async () => {
-    await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
+  test(
+    "createDir",
+    async () => {
+      await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+        });
+        await ftp.connect();
+        await ftp.mkdir("test");
       });
-      await ftp.connect();
-      await ftp.mkdir("test");
-    });
-    const list = await basicFtp.list();
-    expect(list.map((i) => i.name)).toContain("test");
-  }, { timeout: 20_000 });
+      const list = await basicFtp.list();
+      expect(list.map((i) => i.name)).toContain("test");
+    },
+    { timeout: 20_000 },
+  );
 
-  test("cwd", async () => {
-    const cwd = await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
+  test(
+    "cwd",
+    async () => {
+      const cwd = await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+        });
+        await ftp.connect();
+        return await ftp.cwd();
       });
-      await ftp.connect();
-      return await ftp.cwd();
-    });
-    expect(cwd).toEqual("/");
-  }, { timeout: 20_000 });
+      expect(cwd).toEqual("/");
+    },
+    { timeout: 20_000 },
+  );
 
-  test("changeDir", async () => {
-    const cwd = await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
+  test(
+    "changeDir",
+    async () => {
+      const cwd = await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+        });
+        await ftp.connect();
+        await ftp.chdir("test");
+        return await ftp.cwd();
       });
-      await ftp.connect();
-      await ftp.chdir("test");
-      return await ftp.cwd();
-    });
-    expect(cwd).toEqual("/test");
-  }, { timeout: 20_000 });
+      expect(cwd).toEqual("/test");
+    },
+    { timeout: 20_000 },
+  );
 
-  test("cdUpDir", async () => {
-    const cwd = await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
+  test(
+    "cdUpDir",
+    async () => {
+      const cwd = await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+        });
+        await ftp.connect();
+        const outside = await ftp.cwd();
+        await ftp.chdir("test");
+        const inside = await ftp.cwd();
+        await ftp.cdup();
+        const backOutside = await ftp.cwd();
+        return [outside, inside, backOutside];
       });
-      await ftp.connect();
-      const outside = await ftp.cwd();
-      await ftp.chdir("test");
-      const inside = await ftp.cwd();
-      await ftp.cdup();
-      const backOutside = await ftp.cwd();
-      return [outside, inside, backOutside];
-    });
-    expect(cwd).toEqual(["/", "/test", "/"]);
-  }, { timeout: 20_000 });
+      expect(cwd).toEqual(["/", "/test", "/"]);
+    },
+    { timeout: 20_000 },
+  );
 
-  test("secure", async () => {
-    const cwd = await run(async () => {
-      const ftp = new FTPClient("$SERVER$", {
-        port: 21,
-        user: "$USER$",
-        pass: "$PASS$",
-        secure: true,
+  test(
+    "secure",
+    async () => {
+      const cwd = await run(async () => {
+        const ftp = new FTPClient("$SERVER$", {
+          port: 21,
+          user: "$USER$",
+          pass: "$PASS$",
+          secure: true,
+        });
+        await ftp.connect();
+        return await ftp.cwd();
       });
-      await ftp.connect();
-      return await ftp.cwd();
-    });
-    expect(cwd).toEqual("/");
-  }, { timeout: 20_000 });
+      expect(cwd).toEqual("/");
+    },
+    { timeout: 20_000 },
+  );
 
   test(
     "TODO: unsecure textUpload",
@@ -241,7 +278,8 @@ describe("FTPClient", () => {
 
       await basicFtp.downloadTo(writable, "test.txt");
       expect(content).toEqual("hello world");
-    }, { timeout: 20_000 }
+    },
+    { timeout: 20_000 },
   );
 
   test(
@@ -260,6 +298,7 @@ describe("FTPClient", () => {
         return new TextDecoder().decode(file);
       });
       expect(text).toEqual("hello world");
-    }, { timeout: 20_000 }
+    },
+    { timeout: 20_000 },
   );
 });
