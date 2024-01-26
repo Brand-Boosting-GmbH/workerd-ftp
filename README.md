@@ -10,14 +10,15 @@ FTP Client for use inside Cloudflare Workers, using the [Cloudflare Worker TCP S
 
 This package relies *heavily* on the groundwork provided by [nullobsi/ftpdeno](https://github.com/nullobsi/ftpdeno).
 
-Supports:
+* ☁️ Passive mode (as Cloudflare only supports outgoing TCP connections)
+* 🔐 FTPS via TLS
+* 📥 Downloading/uploading via Readable and Writable interfaces
+* 📂 List files
+* 🛠️ Creating directories and files
+* ✏️ Renaming directories and files
+* 🗑️ Deleting directories and files
 
-* Passive mode (as Cloudflare only supports outgoing TCP connections)
-* FTPS via TLS
-* Downloading/uploading via Readable and Writable interfaces
-* List files
-* Deleting/creating directories and files
-* Renaming files/directories
+**Read more about the TCP Socket connect() API in the Cloudflare Blog: https://blog.cloudflare.com/workers-tcp-socket-api-connect-databases**
 
 ## Usage
 
