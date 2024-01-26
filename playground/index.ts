@@ -1,3 +1,2 @@
-import { test } from "../src";
+import { FTPClient } from "../src";
 
-console.log(test());
