@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { Writable } from 'node:stream'
-import { expect, it, describe, beforeAll, test } from 'vitest'
+import { expect, describe, beforeAll, test } from 'vitest'
 import { build } from 'unbuild'
 import { Client } from 'basic-ftp'
 import type { FTPClient as _FTPClient } from '../src'
