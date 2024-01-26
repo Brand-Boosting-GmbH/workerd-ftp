@@ -12,12 +12,12 @@ This package relies *heavily* on the groundwork provided by [nullobsi/ftpdeno](h
 
 Supports:
 
-Passive mode (as Cloudflare only supports outgoing TCP connections)
-FTPS via TLS
-Downloading/uploading via Readable and Writable interfaces
-List files
-Deleting/creating directories and files
-Renaming files/directories
+* Passive mode (as Cloudflare only supports outgoing TCP connections)
+* FTPS via TLS
+* Downloading/uploading via Readable and Writable interfaces
+* List files
+* Deleting/creating directories and files
+* Renaming files/directories
 
 ## Usage
 
