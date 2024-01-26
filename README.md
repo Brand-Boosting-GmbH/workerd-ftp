@@ -1,11 +1,23 @@
-# packageName
+# 📁 Cloudflare Worker FTP Client
+## workerd-ftp
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![bundle][bundle-src]][bundle-href]
 [![Codecov][codecov-src]][codecov-href]
 
-This is my package description.
+FTP Client for use inside Cloudflare Workers, using the [Cloudflare Worker TCP Sockets API](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets).
+
+This package relies *heavily* on the groundwork provided by [nullobsi/ftpdeno](https://github.com/nullobsi/ftpdeno).
+
+Supports:
+
+Passive mode (as Cloudflare only supports outgoing TCP connections)
+FTPS via TLS
+Downloading/uploading via Readable and Writable interfaces
+List files
+Deleting/creating directories and files
+Renaming files/directories
 
 ## Usage
 
@@ -13,26 +25,41 @@ Install package:
 
 ```sh
 # npm
-npm install packageName
+npm install workerd-ftp
 
 # yarn
-yarn add packageName
+yarn add workerd-ftp
 
 # pnpm
-pnpm install packageName
+pnpm install workerd-ftp
 
 # bun
-bun install packageName
+bun install workerd-ftp
 ```
 
 Import:
 
 ```js
-// ESM
-import {} from "packageName";
+import { FTPClient } from "workerd-ftp";
 
-// CommonJS
-const {} = require("packageName");
+const ftp = new FTPClient('$SERVER$', {
+  port: 21,
+  user: '$USER$',
+  pass: '$PASS$',
+  secure: false
+})
+await ftp.connect()
+
+// get currend working directory
+const cwd = await ftp.cwd()
+
+// upload file
+await ftp.upload('test.txt', new TextEncoder().encode('hello world'))
+
+// download file
+const file = await ftp.download('test.txt')
+const text = new TextDecoder().decode(file)
+
 ```
 
 ## Development
@@ -51,11 +78,11 @@ Published under [MIT License](./LICENSE).
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/packageName?style=flat&colorA=18181B&colorB=F0DB4F
-[npm-version-href]: https://npmjs.com/package/packageName
-[npm-downloads-src]: https://img.shields.io/npm/dm/packageName?style=flat&colorA=18181B&colorB=F0DB4F
-[npm-downloads-href]: https://npmjs.com/package/packageName
-[codecov-src]: https://img.shields.io/codecov/c/gh/unjs/packageName/main?style=flat&colorA=18181B&colorB=F0DB4F
-[codecov-href]: https://codecov.io/gh/unjs/packageName
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/packageName?style=flat&colorA=18181B&colorB=F0DB4F
-[bundle-href]: https://bundlephobia.com/result?p=packageName
+[npm-version-src]: https://img.shields.io/npm/v/workerd-ftp?style=flat&colorA=18181B&colorB=F0DB4F
+[npm-version-href]: https://npmjs.com/package/workerd-ftp
+[npm-downloads-src]: https://img.shields.io/npm/dm/workerd-ftp?style=flat&colorA=18181B&colorB=F0DB4F
+[npm-downloads-href]: https://npmjs.com/package/workerd-ftp
+[codecov-src]: https://img.shields.io/codecov/c/gh/unjs/workerd-ftp/main?style=flat&colorA=18181B&colorB=F0DB4F
+[codecov-href]: https://codecov.io/gh/unjs/workerd-ftp
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/workerd-ftp?style=flat&colorA=18181B&colorB=F0DB4F
+[bundle-href]: https://bundlephobia.com/result?p=workerd-ftp

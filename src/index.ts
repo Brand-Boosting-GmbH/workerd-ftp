@@ -1,3 +1,3 @@
-export function test() {
-  return "works!";
-}
+export {
+  FTPClient
+} from './classes/ftp-client'

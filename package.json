@@ -1,8 +1,8 @@
 {
-  "name": "packageName",
-  "version": "0.0.0",
+  "name": "workerd-ftp",
+  "version": "0.1.0",
   "description": "",
-  "repository": "unjs/packageName",
+  "repository": "Brand-Boosting-GmbH/workerd-ftp",
   "license": "MIT",
   "sideEffects": false,
   "type": "module",
@@ -10,6 +10,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
+      "worker": "./dist/index.mjs",
+      "workerd": "./dist/index.mjs",
+      "cloudflare-worker": "./dist/index.mjs",
+      "browser": "./dist/index.mjs",
       "require": "./dist/index.cjs"
     }
   },
@@ -31,12 +35,16 @@
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240117.0",
     "@types/node": "^20.10.5",
     "@vitest/coverage-v8": "^1.1.0",
+    "basic-ftp": "^5.0.4",
     "changelogen": "^0.5.5",
+    "dotenv": "^16.3.2",
     "eslint": "^8.56.0",
     "eslint-config-unjs": "^0.2.1",
     "jiti": "^1.21.0",
+    "miniflare": "^3.20231218.2",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
