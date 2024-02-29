@@ -8,6 +8,7 @@ import { FeatMatrix, FEATURES } from "../types/feat-matrix";
 import { FTPFileInfo } from "../types/ftp-file-info";
 import FTPReply from "../types/ftp-reply";
 import { streamToUint8Array } from "../util/stream";
+import { detectEndChunk } from "../util/detect-end-chunk";
 import Lock from "./lock";
 
 export class FTPClient {
@@ -711,27 +712,16 @@ export class FTPClient {
       this.reader = this.conn.readable.getReader();
     }
 
-    const detectEndChunk = (str: string) => {
-      const tempLines = str.split(/\r\n|\n|\r/);
-        if (tempLines.at(-1)?.length === 0) {
-          tempLines.pop();
-        }
-        const statusCodeFirstLine = tempLines[0].slice(0, 3);
-        const statusCodeLastLine = tempLines.at(-1)?.slice(0, 3);
-        return tempLines.length > 1 && statusCodeFirstLine === statusCodeLastLine
-      }
-
     const chunk = await this.reader.read();
     let str = new TextDecoder().decode(chunk.value);
     const isMultiLine = str.charAt(3) === "-";
 
     if (isMultiLine && !detectEndChunk(str)) {
-
       let isEndChunk = false;
       do {
         const nextChunk = await this.reader.read();
-        str += new TextDecoder().decode(nextChunk.value);   
-        isEndChunk = detectEndChunk(str)
+        str += new TextDecoder().decode(nextChunk.value);
+        isEndChunk = detectEndChunk(str);
       } while (!isEndChunk);
     }
 
