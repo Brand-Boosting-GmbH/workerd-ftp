@@ -711,28 +711,27 @@ export class FTPClient {
       this.reader = this.conn.readable.getReader();
     }
 
-    const chunk = await this.reader.read();
-    let str = new TextDecoder().decode(chunk.value);
-    const isMultiLine = str.charAt(3) === "-";
-
-    if (isMultiLine) {
-      let isEndChunk = false;
-      do {
-        const nextChunk = await this.reader.read();
-        str += new TextDecoder().decode(nextChunk.value);
-        const tempLines = str.split(/\r\n|\n|\r/);
+    const detectEndChunk = (str: string) => {
+      const tempLines = str.split(/\r\n|\n|\r/);
         if (tempLines.at(-1)?.length === 0) {
           tempLines.pop();
         }
         const statusCodeFirstLine = tempLines[0].slice(0, 3);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const statusCodeLastLine = tempLines.at(-1)?.slice(0, 3);
-        if (
-          tempLines.length > 1 &&
-          statusCodeFirstLine === statusCodeLastLine
-        ) {
-          isEndChunk = true;
-        }
+        return tempLines.length > 1 && statusCodeFirstLine === statusCodeLastLine
+      }
+
+    const chunk = await this.reader.read();
+    let str = new TextDecoder().decode(chunk.value);
+    const isMultiLine = str.charAt(3) === "-";
+
+    if (isMultiLine && !detectEndChunk(str)) {
+
+      let isEndChunk = false;
+      do {
+        const nextChunk = await this.reader.read();
+        str += new TextDecoder().decode(nextChunk.value);   
+        isEndChunk = detectEndChunk(str)
       } while (!isEndChunk);
     }
 
