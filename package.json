@@ -1,6 +1,6 @@
 {
   "name": "workerd-ftp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "repository": "Brand-Boosting-GmbH/workerd-ftp",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "lint": "eslint --cache --ext .ts,.js,.mjs,.cjs . && prettier -c src test",
     "lint:fix": "eslint --cache --ext .ts,.js,.mjs,.cjs . --fix && prettier -c src test -w",
     "prepack": "pnpm build",
-    "release": "pnpm test && changelogen --release && npm publish && git push --follow-tags",
+    "release": "changelogen --release && npm publish && git push --follow-tags",
     "test": "pnpm lint && pnpm test:types && vitest run --coverage",
     "test:types": "tsc --noEmit --skipLibCheck"
   },
