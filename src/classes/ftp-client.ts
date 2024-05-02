@@ -90,7 +90,7 @@ export class FTPClient {
 
     const discoveredFeats = status.message.split("\r\n").map((a) => a.trim());
     this.feats = Object.fromEntries(
-      FEATURES.map((feat) => [feat, discoveredFeats.includes(feat)]),
+      FEATURES.map((feat) => [feat, discoveredFeats.some(v => v.startsWith(feat))]),
     ) as FeatMatrix;
 
     let mlst = discoveredFeats.find((v) => v.startsWith("MLST"));
